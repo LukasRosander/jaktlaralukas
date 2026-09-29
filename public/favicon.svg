@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Jägarexamen">
+  <rect width="64" height="64" rx="16" fill="#14331f" />
+  <path
+    d="M32 11 43.5 31.5H37L45 46H19l8-14.5h-6.5L32 11Z"
+    fill="#9dc08b"
+  />
+  <rect x="29.5" y="45" width="5" height="9" rx="2.5" fill="#e8e2d5" />
+</svg>

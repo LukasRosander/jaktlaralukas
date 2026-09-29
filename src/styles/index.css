@@ -1,0 +1,176 @@
+@import 'tailwindcss';
+
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource/instrument-serif/400.css';
+
+/*
+  Design tokens for the Jägarexamen visual identity.
+  Palette: dark forest green -> sage green -> beige/off-white -> dark grey text.
+*/
+@theme {
+  --color-forest-50: #eef4ef;
+  --color-forest-100: #d6e4d9;
+  --color-forest-200: #adc9b4;
+  --color-forest-300: #7fa88c;
+  --color-forest-400: #4f8462;
+  --color-forest-500: #2f6b41;
+  --color-forest-600: #245634;
+  --color-forest-700: #1c4429;
+  --color-forest-800: #14331f;
+  --color-forest-900: #0e2617;
+  --color-forest-950: #071a0f;
+
+  --color-moss-50: #f2f7ee;
+  --color-moss-100: #e2ecd9;
+  --color-moss-200: #c3d9b4;
+  --color-moss-300: #9dc08b;
+  --color-moss-400: #86b473;
+  --color-moss-500: #6a9a5b;
+  --color-moss-600: #527a45;
+
+  --color-sand-50: #fbf9f4;
+  --color-sand-100: #f4f1e8;
+  --color-sand-200: #e8e2d5;
+  --color-sand-300: #d9d0bd;
+  --color-sand-400: #c0b49b;
+
+  --color-ink-900: #1a1d1b;
+  --color-ink-800: #2a2f2c;
+  --color-ink-700: #3c443f;
+  --color-ink-600: #55605a;
+  --color-ink-500: #6f7a74;
+  --color-ink-400: #8f9993;
+
+  --color-berry-500: #b3453a;
+  --color-berry-600: #97382f;
+  --color-berry-50: #fdf1ef;
+
+  --color-amber-ochre: #c98a2e;
+  --color-amber-ochre-light: #fdf4e4;
+
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+
+  --radius-card: 1.25rem;
+
+  --shadow-soft: 0 1px 2px rgb(20 51 31 / 0.04), 0 8px 24px -12px rgb(20 51 31 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(20 51 31 / 0.05), 0 18px 40px -16px rgb(20 51 31 / 0.22);
+
+  --animate-fade-in: fade-in 0.35s ease-out both;
+  --animate-rise: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-pop: pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-shake: shake 0.4s ease-in-out both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@layer base {
+  :root {
+    --app-font-scale: 1;
+    color-scheme: light;
+  }
+
+  html {
+    font-size: calc(16px * var(--app-font-scale));
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-sand-50 font-sans text-ink-800 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-ink-900;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    @apply outline-forest-500 outline-2 outline-offset-2;
+  }
+
+  /* Respect both the OS setting and the in-app "reduce motion" preference. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@utility scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sand-300) transparent;
+}
