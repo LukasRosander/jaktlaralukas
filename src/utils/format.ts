@@ -4,10 +4,6 @@ export function formatNumber(value: number): string {
   return decimal.format(value)
 }
 
-export function formatPercent(value: number): string {
-  return `${Math.round(value)} %`
-}
-
 /** Swedish plural helper: `pluralize(1, 'fråga', 'frågor')`. */
 export function pluralize(count: number, singular: string, plural: string): string {
   return count === 1 ? singular : plural

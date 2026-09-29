@@ -32,6 +32,9 @@ export function DashboardPage() {
   const todayCount = answeredToday(progress)
   const remaining = Math.max(0, goal - todayCount)
   const recentExams = [...progress.exams].reverse().slice(0, 3)
+  // When the reminder is turned off in settings, the card drops the daily goal
+  // framing and simply offers a practice session.
+  const showDailyGoal = progress.settings.dailyReminder
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -161,35 +164,43 @@ export function DashboardPage() {
         {/* ── Today's practice ───────────────────────────────────────────── */}
         <section aria-labelledby="dagens-traning">
           <h2 id="dagens-traning" className="mb-3 text-lg font-semibold">
-            Dagens träning
+            {showDailyGoal ? 'Dagens träning' : 'Träna på frågor'}
           </h2>
           <Card className="flex h-full flex-col">
             <span className="bg-moss-100 text-forest-700 flex size-11 items-center justify-center rounded-xl">
               <ListChecks className="size-5.5" />
             </span>
-            <p className="mt-4 text-lg font-semibold">
-              {remaining > 0
-                ? `${remaining} ${pluralize(remaining, 'fråga', 'frågor')} rekommenderas idag`
-                : 'Dagens mål är klart'}
-            </p>
-            <p className="text-ink-500 mt-1 text-sm">
-              {remaining > 0
-                ? `Du har svarat på ${todayCount} av ${goal} frågor idag.`
-                : `Du har svarat på ${todayCount} frågor idag. Fortsätt gärna om du har tid.`}
-            </p>
 
-            <ProgressBar
-              value={goal === 0 ? 100 : (todayCount / goal) * 100}
-              size="sm"
-              tone={remaining > 0 ? 'forest' : 'moss'}
-              className="mt-4"
-            />
+            {showDailyGoal ? (
+              <>
+                <p className="mt-4 text-lg font-semibold">
+                  {remaining > 0
+                    ? `${remaining} ${pluralize(remaining, 'fråga', 'frågor')} rekommenderas idag`
+                    : 'Dagens mål är klart'}
+                </p>
+                <p className="text-ink-500 mt-1 text-sm">
+                  {remaining > 0
+                    ? `Du har svarat på ${todayCount} av ${goal} frågor idag.`
+                    : `Du har svarat på ${todayCount} frågor idag. Fortsätt gärna om du har tid.`}
+                </p>
+                <ProgressBar
+                  value={goal === 0 ? 100 : (todayCount / goal) * 100}
+                  size="sm"
+                  tone={remaining > 0 ? 'forest' : 'moss'}
+                  className="mt-4"
+                />
+              </>
+            ) : (
+              <>
+                <p className="mt-4 text-lg font-semibold">Öva när det passar dig</p>
+                <p className="text-ink-500 mt-1 text-sm">
+                  Du får facit och en förklaring direkt efter varje svar.
+                </p>
+              </>
+            )}
 
-            <Link
-              to="/app/fragor"
-              className={buttonStyles('primary', 'md', 'mt-5 self-start')}
-            >
-              {remaining > 0 ? 'Starta träning' : 'Träna mer'}
+            <Link to="/app/fragor" className={buttonStyles('primary', 'md', 'mt-5 self-start')}>
+              {showDailyGoal && remaining === 0 ? 'Träna mer' : 'Starta träning'}
               <ArrowRight className="size-4" />
             </Link>
 

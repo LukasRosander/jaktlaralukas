@@ -14,8 +14,14 @@ export interface QuestionCardProps {
   question: Question
   /** `null` while unanswered. */
   selectedAnswer: number | null
-  /** Show correct/incorrect state and the explanation. */
+  /** Show the correct alternative and the explanation. */
   revealed: boolean
+  /**
+   * `feedback` judges the learner's pick ("Rätt svar!" / "Fel svar").
+   * `reference` only presents the correct answer, for saved questions and other
+   * read-only contexts where there is nothing to judge.
+   */
+  revealMode?: 'feedback' | 'reference'
   onSelect: (index: number) => void
   /** e.g. "Fråga 4 av 25". */
   counterLabel?: string
@@ -42,11 +48,13 @@ export function QuestionCard({
   question,
   selectedAnswer,
   revealed,
+  revealMode = 'feedback',
   onSelect,
   counterLabel,
   showBookmark = true,
   footer,
 }: QuestionCardProps) {
+  const isReference = revealMode === 'reference'
   const isCorrect = selectedAnswer === question.correctAnswer
 
   return (
@@ -73,7 +81,7 @@ export function QuestionCard({
             let state: 'idle' | 'selected' | 'correct' | 'incorrect' | 'muted' = 'idle'
             if (revealed) {
               if (correctOption) state = 'correct'
-              else if (chosen) state = 'incorrect'
+              else if (chosen && !isReference) state = 'incorrect'
               else state = 'muted'
             } else if (chosen) {
               state = 'selected'
@@ -122,30 +130,43 @@ export function QuestionCard({
         <div
           className={cn(
             'animate-rise border-t p-5 sm:p-7',
-            isCorrect ? 'border-moss-200 bg-moss-50' : 'border-berry-500/20 bg-berry-50',
+            isReference || isCorrect
+              ? 'border-moss-200 bg-moss-50'
+              : 'border-berry-500/20 bg-berry-50',
           )}
         >
-          <p
-            className={cn(
-              'flex items-center gap-2 text-base font-semibold',
-              isCorrect ? 'text-forest-700' : 'text-berry-600',
-            )}
-          >
-            {isCorrect ? (
+          {isReference ? (
+            <p className="text-forest-700 flex items-center gap-2 text-base font-semibold">
               <CircleCheck className="size-5 shrink-0" />
-            ) : (
-              <CircleX className="size-5 shrink-0" />
-            )}
-            {isCorrect ? 'Rätt svar!' : 'Fel svar'}
-          </p>
-          {!isCorrect ? (
-            <p className="text-ink-700 mt-2 text-sm">
-              Rätt svar är{' '}
-              <strong className="font-semibold">
-                {answerLetter(question.correctAnswer)}. {question.answers[question.correctAnswer]}
-              </strong>
+              Rätt svar: {answerLetter(question.correctAnswer)}
             </p>
-          ) : null}
+          ) : (
+            <>
+              <p
+                className={cn(
+                  'flex items-center gap-2 text-base font-semibold',
+                  isCorrect ? 'text-forest-700' : 'text-berry-600',
+                )}
+              >
+                {isCorrect ? (
+                  <CircleCheck className="size-5 shrink-0" />
+                ) : (
+                  <CircleX className="size-5 shrink-0" />
+                )}
+                {isCorrect ? 'Rätt svar!' : 'Fel svar'}
+              </p>
+              {!isCorrect ? (
+                <p className="text-ink-700 mt-2 text-sm">
+                  {selectedAnswer === null ? 'Du hoppade över frågan. ' : null}
+                  Rätt svar är{' '}
+                  <strong className="font-semibold">
+                    {answerLetter(question.correctAnswer)}.{' '}
+                    {question.answers[question.correctAnswer]}
+                  </strong>
+                </p>
+              ) : null}
+            </>
+          )}
           <p className="text-ink-700 mt-3 text-[0.9375rem] leading-relaxed">
             {question.explanation}
           </p>

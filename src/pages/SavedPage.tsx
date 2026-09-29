@@ -117,8 +117,9 @@ export function SavedPage() {
                     <li key={bookmark.refId}>
                       <QuestionCard
                         question={question}
-                        selectedAnswer={question.correctAnswer}
+                        selectedAnswer={null}
                         revealed
+                        revealMode="reference"
                         onSelect={() => undefined}
                         counterLabel={`Sparad ${formatRelativeDay(bookmark.savedAt)}`}
                       />

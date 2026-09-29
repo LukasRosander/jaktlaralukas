@@ -1,5 +1,5 @@
 import { ArrowRight, CircleCheck, CircleX, ListChecks, RotateCcw, Sparkles } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { QuestionCard } from '@/components/questions/QuestionCard'
@@ -14,9 +14,19 @@ import { getQuestions, getTheoryCategories } from '@/data/repository'
 import { useProgress } from '@/hooks/useProgress'
 import { shuffle } from '@/utils/random'
 import { unmasteredQuestionIds } from '@/utils/stats'
-import type { CategoryId, Question } from '@/types'
+import type { CategoryId, ProgressState, Question } from '@/types'
 
 type Mode = 'alla' | 'obesvarade'
+
+/** Questions matching the current filters, in curriculum order. */
+function buildPool(progress: ProgressState, categoryId: CategoryId | null, mode: Mode): Question[] {
+  const unmastered = new Set(unmasteredQuestionIds(progress))
+  return getQuestions().filter((question) => {
+    if (categoryId && question.categoryId !== categoryId) return false
+    if (mode === 'obesvarade' && !unmastered.has(question.id)) return false
+    return true
+  })
+}
 
 export function PracticePage() {
   const { progress, recordAnswer } = useProgress()
@@ -34,29 +44,34 @@ export function PracticePage() {
   const [selected, setSelected] = useState<number | null>(null)
   const [session, setSession] = useState({ answered: 0, correct: 0 })
 
-  const pool = useMemo(() => {
-    const unmastered = new Set(unmasteredQuestionIds(progress))
-    return getQuestions().filter((question) => {
-      if (activeCategory && question.categoryId !== activeCategory) return false
-      if (mode === 'obesvarade' && !unmastered.has(question.id)) return false
-      return true
-    })
-    // The pool must not reshuffle on every answer, so the progress reference is
-    // intentionally read only when the filters change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeCategory, mode])
+  const poolSize = useMemo(
+    () => buildPool(progress, activeCategory, mode).length,
+    [progress, activeCategory, mode],
+  )
 
-  const shuffleQuestions = progress.settings.shuffleQuestions
-  const startSession = useCallback(() => {
-    setQueue(shuffleQuestions ? shuffle(pool) : [...pool])
+  /**
+   * Builds a fresh queue from the current progress. The queue is then frozen in
+   * state for the rest of the session, so answering a question never reorders
+   * or shortens the run the learner is in the middle of.
+   */
+  const startSession = () => {
+    const pool = buildPool(progress, activeCategory, mode)
+    setQueue(progress.settings.shuffleQuestions ? shuffle(pool) : pool)
     setIndex(0)
     setSelected(null)
     setSession({ answered: 0, correct: 0 })
-  }, [pool, shuffleQuestions])
+  }
 
+  const startSessionRef = useRef(startSession)
   useEffect(() => {
-    startSession()
-  }, [startSession])
+    startSessionRef.current = startSession
+  })
+
+  // Restart only when the filters change; `startSessionRef` always holds the
+  // latest closure, so the new queue reflects current progress.
+  useEffect(() => {
+    startSessionRef.current()
+  }, [activeCategory, mode])
 
   const current = queue[index]
   const finished = queue.length > 0 && index >= queue.length
@@ -173,7 +188,7 @@ export function PracticePage() {
       ) : null}
 
       {/* ── Question ─────────────────────────────────────────────────────── */}
-      {pool.length === 0 ? (
+      {queue.length === 0 && poolSize === 0 ? (
         <EmptyState
           icon={<Sparkles className="size-6" />}
           title="Inga frågor kvar här"

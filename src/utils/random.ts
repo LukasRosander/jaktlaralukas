@@ -8,11 +8,6 @@ export function shuffle<T>(items: readonly T[]): T[] {
   return result
 }
 
-export function pickRandom<T>(items: readonly T[]): T | undefined {
-  if (items.length === 0) return undefined
-  return items[Math.floor(Math.random() * items.length)]
-}
-
 export function createId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
 }
