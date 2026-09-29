@@ -75,7 +75,7 @@ export function PlatformPreview({ className }: { className?: string }) {
 
             <div className="bg-forest-800 rounded-xl p-3 text-sand-100">
               <div className="flex items-baseline justify-between">
-                <span className="text-[0.6875rem] text-sand-200/80">Din framsteg</span>
+                <span className="text-[0.6875rem] text-sand-200/80">Dina framsteg</span>
                 <span className="text-lg font-semibold">40 %</span>
               </div>
               <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/15">

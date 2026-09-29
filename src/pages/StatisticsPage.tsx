@@ -32,7 +32,7 @@ export function StatisticsPage() {
   if (stats.totalAnswered === 0 && exams.length === 0) {
     return (
       <div>
-        <PageHeader eyebrow="Statistik" title="Din utveckling" />
+        <PageHeader eyebrow="Statistik" title="Så ligger du till" />
         <EmptyState
           icon={<ListChecks className="size-6" />}
           title="Ingen statistik ännu"
@@ -51,7 +51,7 @@ export function StatisticsPage() {
     <div>
       <PageHeader
         eyebrow="Statistik"
-        title="Din utveckling"
+        title="Så ligger du till"
         description="Siffrorna bygger på allt du svarat på i övningsläget och i prov."
       />
 

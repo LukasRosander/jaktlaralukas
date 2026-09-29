@@ -23,7 +23,7 @@ export function TheoryCard({
   return (
     <Link
       to={`/app/teori/${category.id}`}
-      className="group rounded-card border-sand-200 shadow-soft hover:shadow-lift focus-visible:outline-forest-600 flex flex-col overflow-hidden border bg-white transition-all duration-300 hover:-translate-y-0.5"
+      className="group rounded-card border-sand-200 shadow-soft hover:shadow-lift focus-visible:outline-forest-600 flex h-full flex-col overflow-hidden border bg-white transition-all duration-300 hover:-translate-y-0.5"
     >
       <div className="relative aspect-16/10 overflow-hidden">
         <img

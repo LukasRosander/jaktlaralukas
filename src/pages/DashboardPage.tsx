@@ -52,7 +52,7 @@ export function DashboardPage() {
         <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div>
             <p className="text-moss-300 text-xs font-semibold tracking-[0.12em] uppercase">
-              Din framsteg
+              Dina framsteg
             </p>
             <p className="font-display mt-2 text-5xl leading-none text-sand-50 sm:text-6xl">
               {Math.round(stats.overallProgress)} %

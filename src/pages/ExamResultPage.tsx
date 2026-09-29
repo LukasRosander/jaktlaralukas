@@ -86,7 +86,7 @@ export function ExamResultPage() {
             </span>
           </RingProgress>
 
-          <dl className="grid w-full max-w-sm gap-3 sm:w-auto">
+          <dl className="grid w-full max-w-sm gap-3 sm:w-auto xl:max-w-none xl:grid-cols-3">
             {[
               {
                 label: 'Rätt svar',
@@ -113,7 +113,7 @@ export function ExamResultPage() {
                 value={item.value}
                 icon={item.icon}
                 tone={item.tone}
-                className="sm:min-w-52"
+                className="sm:min-w-52 xl:min-w-44"
               />
             ))}
           </dl>
@@ -156,20 +156,22 @@ export function ExamResultPage() {
               ? 'Du ligger stabilt. Håll i gång med korta pass och fokusera på de områden där du tappar poäng.'
               : 'Repetera teorin i de svagaste områdena och kör sedan ett nytt prov för att se effekten.'}
           </p>
-          <Link
-            to="/app/teori"
-            className="text-forest-700 mt-4 inline-flex items-center gap-1.5 text-sm font-medium hover:underline"
-          >
-            Gå till teorin
-            <ArrowRight className="size-4" />
-          </Link>
-          <Link
-            to="/app/statistik"
-            className="text-forest-700 mt-2 inline-flex items-center gap-1.5 text-sm font-medium hover:underline"
-          >
-            Se din utveckling
-            <ArrowRight className="size-4" />
-          </Link>
+          <div className="mt-4 flex flex-col items-start gap-2">
+            <Link
+              to="/app/teori"
+              className="text-forest-700 inline-flex items-center gap-1.5 text-sm font-medium hover:underline"
+            >
+              Gå till teorin
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link
+              to="/app/statistik"
+              className="text-forest-700 inline-flex items-center gap-1.5 text-sm font-medium hover:underline"
+            >
+              Se din utveckling
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
         </Card>
       </div>
 

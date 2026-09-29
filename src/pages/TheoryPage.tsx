@@ -51,7 +51,7 @@ export function TheoryPage() {
       <PageHeader
         eyebrow="Teori"
         title="Kursens tolv ämnesområden"
-        description="Läs ett kapitel i taget och markera det som klart när du känner dig säker. Din framsteg uppdateras direkt."
+        description="Läs ett kapitel i taget och markera det som klart när du känner dig säker. Dina framsteg uppdateras direkt."
       />
 
       <Card tone="sand" className="mb-6">

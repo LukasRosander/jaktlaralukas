@@ -58,7 +58,7 @@ export function Sidebar() {
         <div className="px-1">
           <ProgressBar
             value={stats.overallProgress}
-            label="Din framsteg"
+            label="Dina framsteg"
             showValue
             tone="forest"
           />
