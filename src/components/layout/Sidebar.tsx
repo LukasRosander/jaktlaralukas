@@ -7,6 +7,7 @@ import { navItems } from '@/config/navigation'
 import { getProfile } from '@/data/repository'
 import { useProgress } from '@/hooks/useProgress'
 import { cn } from '@/utils/cn'
+import { pluralize } from '@/utils/format'
 import { deriveStats } from '@/utils/stats'
 
 /** Desktop navigation rail. Hidden below the `lg` breakpoint. */
@@ -81,8 +82,14 @@ export function Sidebar() {
               {profile.name}
             </span>
             <span className="text-ink-500 flex items-center gap-1 text-xs">
-              <Flame className="text-amber-ochre size-3.5" />
-              {stats.streakDays} dagar i rad
+              {stats.streakDays > 0 ? (
+                <>
+                  <Flame className="text-amber-ochre size-3.5" />
+                  {stats.streakDays} {pluralize(stats.streakDays, 'dag', 'dagar')} i rad
+                </>
+              ) : (
+                'Se din profil'
+              )}
             </span>
           </span>
         </Link>

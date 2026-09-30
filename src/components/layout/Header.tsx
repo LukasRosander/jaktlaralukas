@@ -6,6 +6,7 @@ import { Pill } from '@/components/ui/Pill'
 import { navItems, profileNavItem } from '@/config/navigation'
 import { getProfile } from '@/data/repository'
 import { useProgress } from '@/hooks/useProgress'
+import { pluralize } from '@/utils/format'
 import { calculateStreak } from '@/utils/stats'
 
 function currentTitle(pathname: string): string {
@@ -39,9 +40,15 @@ export function Header() {
           >
             <Search className="size-4.5" />
           </Link>
-          <Pill tone="warning" icon={<Flame className="size-3.5" />} className="hidden sm:inline-flex">
-            {streak} dagar
-          </Pill>
+          {streak > 0 ? (
+            <Pill
+              tone="warning"
+              icon={<Flame className="size-3.5" />}
+              className="hidden sm:inline-flex"
+            >
+              {streak} {pluralize(streak, 'dag', 'dagar')}
+            </Pill>
+          ) : null}
           <Link to="/app/profil" aria-label="Min profil" className="shrink-0">
             <img
               src={profile.avatar}

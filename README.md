@@ -19,6 +19,10 @@ Det här är **första versionen** av plattformen: en komplett, interaktiv front
 lokalt. All data är mockdata som ligger i `src/data/` och sparas i webbläsarens `localStorage`.
 Ingen backend, ingen inloggning och ingen databas behövs för att köra projektet.
 
+Appen startar tom – noll avklarade kapitel, noll svar och alla märken låsta – precis som för en ny
+användare. Vill du se hur skärmarna ser ut med historik finns **Fyll på med demodata** under
+Inställningar → Dina data.
+
 Arkitekturen är däremot förberedd för en riktig backend – se
 [Byta till ett riktigt API](#byta-till-ett-riktigt-api).
 
@@ -187,7 +191,7 @@ jaktlara/
 │   │   ├── questions.ts        Frågebanken (exempelfrågor)
 │   │   ├── repository.ts       Åtkomstlagret mot innehållet
 │   │   ├── sources.ts          Återanvändbara källhänvisningar
-│   │   ├── statistics.ts       Seedad demohistorik
+│   │   ├── statistics.ts       Demohistorik (valfri, tomt läge som standard)
 │   │   ├── theory.ts           De 12 ämnesområdena
 │   │   └── user.ts             Mockprofil och standardinställningar
 │   ├── hooks/                  useProgress, useLocalStorage, useScrollToTop
@@ -215,7 +219,7 @@ jaktlara/
   mockdatan direkt – de går via **`src/data/repository.ts`**.
 - **`src/store/ProgressProvider.tsx`** äger användarens framsteg: klarmarkerade kapitel, svar, prov,
   bokmärken, märken och inställningar. Allt sparas i `localStorage` under nyckeln
-  `jaktlara.progress.v1`.
+  `jaktlara.progress.v2`.
 - **`src/utils/`** innehåller alla beräkningar – statistik, streak, märkesvillkor och provlogik – så
   att komponenterna kan hållas rena.
 - **`src/components/`** är presentationslagret, uppdelat i `ui/` (generiska byggstenar) och

@@ -167,6 +167,11 @@ export function SettingsPage() {
             description="Framstegen sparas i webbläsarens localStorage. Ingenting skickas till en server i den här versionen."
           />
 
+          <p className="text-ink-500 mb-3 text-sm">
+            Vill du se hur appen ser ut med historik kan du fylla på med exempeldata. Den ersätter
+            dina egna framsteg.
+          </p>
+
           <div className="space-y-3">
             <Button
               variant="secondary"
@@ -174,7 +179,7 @@ export function SettingsPage() {
               onClick={restoreDemoData}
               iconLeft={<Database className="size-4" />}
             >
-              Återställ demodata
+              Fyll på med demodata
             </Button>
 
             {confirmReset ? (

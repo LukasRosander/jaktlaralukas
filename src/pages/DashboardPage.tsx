@@ -35,15 +35,19 @@ export function DashboardPage() {
   // When the reminder is turned off in settings, the card drops the daily goal
   // framing and simply offers a practice session.
   const showDailyGoal = progress.settings.dailyReminder
+  // A brand new visitor gets welcoming copy instead of "continue where you left
+  // off", which would be confusing with nothing to continue from.
+  const hasStarted =
+    stats.totalAnswered > 0 || stats.completedChapterCount > 0 || progress.exams.length > 0
 
   return (
     <div className="space-y-6 sm:space-y-8">
       <header className="animate-rise">
         <p className="text-forest-600 text-xs font-semibold tracking-[0.12em] uppercase">
-          Välkommen tillbaka, {profile.name}!
+          {hasStarted ? `Välkommen tillbaka, ${profile.name}!` : `Välkommen, ${profile.name}!`}
         </p>
         <h1 className="font-display mt-1.5 text-3xl leading-tight sm:text-4xl">
-          Fortsätt där du slutade.
+          {hasStarted ? 'Fortsätt där du slutade.' : 'Så här kommer du igång.'}
         </h1>
       </header>
 
@@ -81,7 +85,7 @@ export function DashboardPage() {
                 icon: <Flame className="size-4" />,
               },
               {
-                value: `${Math.round(stats.bestExamScore)} %`,
+                value: progress.exams.length > 0 ? `${Math.round(stats.bestExamScore)} %` : '–',
                 label: 'bästa prov',
                 icon: <TrendingUp className="size-4" />,
               },
@@ -107,7 +111,7 @@ export function DashboardPage() {
         {/* ── Continue studying ──────────────────────────────────────────── */}
         <section aria-labelledby="fortsatt-plugga">
           <h2 id="fortsatt-plugga" className="mb-3 text-lg font-semibold">
-            Fortsätt plugga
+            {hasStarted ? 'Fortsätt plugga' : 'Börja här'}
           </h2>
 
           {nextUp ? (
@@ -126,7 +130,8 @@ export function DashboardPage() {
                     {nextUp.category.title}
                   </h3>
                   <p className="text-ink-500 mt-1.5 text-sm">
-                    Nästa kapitel: {nextUp.chapter.title}
+                    {nextUp.categoryPercent > 0 ? 'Nästa kapitel' : 'Första kapitlet'}:{' '}
+                    {nextUp.chapter.title}
                   </p>
 
                   <div className="mt-4">
@@ -141,7 +146,7 @@ export function DashboardPage() {
                     to={`/app/teori/${nextUp.category.id}/${nextUp.chapter.id}`}
                     className={buttonStyles('primary', 'md', 'mt-5 self-start')}
                   >
-                    Fortsätt läsa
+                    {nextUp.categoryPercent > 0 ? 'Fortsätt läsa' : 'Börja läsa'}
                     <ArrowRight className="size-4" />
                   </Link>
                 </div>

@@ -8,9 +8,9 @@ import type { AnswerRecord, CategoryId, ExamAttempt, ProgressState } from '@/typ
 /**
  * Seeded demo progress.
  *
- * The prototype ships with a believable study history so every screen has
- * something to show on first load. Replace `createSeedProgress()` with an empty
- * state (or a `GET /api/progress` call) when a backend exists – nothing else in
+ * New visitors start from `createEmptyProgress()`; this believable study history
+ * is opt-in from the settings page, so every screen can be reviewed with data in
+ * it. When a backend exists, `GET /api/progress` replaces both – nothing else in
  * the app depends on the seed.
  */
 

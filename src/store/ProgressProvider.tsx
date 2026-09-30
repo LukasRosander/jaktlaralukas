@@ -19,7 +19,11 @@ import type {
   UserSettings,
 } from '@/types'
 
-const STORAGE_KEY = 'jaktlara.progress.v1'
+/**
+ * Bumped when the default first-run state changes, so existing browsers start
+ * over instead of keeping a save that no longer matches the defaults.
+ */
+const STORAGE_KEY = 'jaktlara.progress.v2'
 
 const FONT_SCALES: Record<UserSettings['fontScale'], string> = {
   liten: '0.9375',
@@ -37,7 +41,8 @@ function normalize(state: ProgressState): ProgressState {
 }
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
-  const [stored, setStored] = useLocalStorage<ProgressState>(STORAGE_KEY, createSeedProgress)
+  // New visitors start from zero. Demo data is opt-in from the settings page.
+  const [stored, setStored] = useLocalStorage<ProgressState>(STORAGE_KEY, createEmptyProgress)
   const progress = useMemo(() => normalize(stored), [stored])
   const [pendingUnlockIds, setPendingUnlockIds] = useState<string[]>([])
 
