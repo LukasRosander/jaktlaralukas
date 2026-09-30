@@ -20,10 +20,13 @@ import type {
 } from '@/types'
 
 /**
- * Bumped when the default first-run state changes, so existing browsers start
- * over instead of keeping a save that no longer matches the defaults.
+ * One entry per account, so two people sharing a browser keep separate progress.
+ * The version is bumped when the default first-run state changes, so existing
+ * browsers start over instead of keeping a save that no longer matches.
  */
-const STORAGE_KEY = 'jaktlara.progress.v2'
+function storageKeyFor(accountId: string): string {
+  return `jaktlara.progress.v2.${accountId}`
+}
 
 const FONT_SCALES: Record<UserSettings['fontScale'], string> = {
   liten: '0.9375',
@@ -40,9 +43,18 @@ function normalize(state: ProgressState): ProgressState {
   }
 }
 
-export function ProgressProvider({ children }: { children: ReactNode }) {
+export function ProgressProvider({
+  children,
+  accountId,
+}: {
+  children: ReactNode
+  accountId: string
+}) {
   // New visitors start from zero. Demo data is opt-in from the settings page.
-  const [stored, setStored] = useLocalStorage<ProgressState>(STORAGE_KEY, createEmptyProgress)
+  const [stored, setStored] = useLocalStorage<ProgressState>(
+    storageKeyFor(accountId),
+    createEmptyProgress,
+  )
   const progress = useMemo(() => normalize(stored), [stored])
   const [pendingUnlockIds, setPendingUnlockIds] = useState<string[]>([])
 

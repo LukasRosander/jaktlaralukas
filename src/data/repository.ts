@@ -1,14 +1,12 @@
 import { achievements } from '@/data/achievements'
 import { questions, questionsById } from '@/data/questions'
 import { allChapters, categoriesById, chaptersById, theoryCategories } from '@/data/theory'
-import { mockProfile } from '@/data/user'
 import type {
   Achievement,
   CategoryId,
   Question,
   TheoryCategory,
   TheoryChapter,
-  UserProfile,
 } from '@/types'
 
 /**
@@ -65,14 +63,13 @@ export function getAchievements(): Achievement[] {
   return achievements
 }
 
-export function getProfile(): UserProfile {
-  return mockProfile
-}
-
-/** Async variants, kept for the eventual API migration. */
+/**
+ * Async variants, kept for the eventual API migration. The profile is not here:
+ * it comes from the signed-in account via `useProfile`, so a real backend would
+ * expose it as `GET /api/me` next to the login endpoint instead.
+ */
 export const api = {
   theoryCategories: () => resolve(theoryCategories),
   questions: () => resolve(questions),
   achievements: () => resolve(achievements),
-  profile: () => resolve(mockProfile),
 }

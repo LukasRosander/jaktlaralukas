@@ -61,7 +61,12 @@ export function MobileNavigation() {
                 }
               >
                 <item.icon className="size-4.5 shrink-0" />
-                {item.label}
+                <span className="min-w-0 truncate">{item.label}</span>
+                {item.badge ? (
+                  <span className="bg-sand-200 text-ink-500 ml-auto shrink-0 rounded-full px-1.5 py-0.5 text-[0.5625rem] font-semibold tracking-wide uppercase">
+                    {item.badge}
+                  </span>
+                ) : null}
               </NavLink>
             </li>
           ))}

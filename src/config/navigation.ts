@@ -5,6 +5,7 @@ import {
   House,
   ListChecks,
   Settings,
+  Sparkles,
   Target,
   Trophy,
   User,
@@ -19,6 +20,8 @@ export interface NavItem {
   icon: LucideIcon
   /** Included in the mobile bottom bar instead of the "Mer" sheet. */
   primary?: boolean
+  /** Short marker for features that are visible but not usable yet. */
+  badge?: string
 }
 
 export const navItems: NavItem[] = [
@@ -29,6 +32,7 @@ export const navItems: NavItem[] = [
   { to: '/app/statistik', label: 'Statistik', icon: ChartColumnBig },
   { to: '/app/sparat', label: 'Sparat', icon: BookmarkCheck },
   { to: '/app/framsteg', label: 'Framsteg', icon: Trophy },
+  { to: '/app/ai-coach', label: 'AI-coach', icon: Sparkles, badge: 'Snart' },
   { to: '/app/installningar', label: 'Inställningar', icon: Settings },
 ]
 

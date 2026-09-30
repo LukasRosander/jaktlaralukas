@@ -1,26 +1,30 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { RequireAuth } from '@/components/auth/RequireAuth'
 import { NotFoundPage } from '@/components/ui/NotFoundPage'
 import { AppLayout } from '@/layouts/AppLayout'
 import { AchievementsPage } from '@/pages/AchievementsPage'
+import { AiCoachPage } from '@/pages/AiCoachPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { ExamResultPage } from '@/pages/ExamResultPage'
 import { ExamRunnerPage } from '@/pages/ExamRunnerPage'
 import { ExamSetupPage } from '@/pages/ExamSetupPage'
 import { LandingPage } from '@/pages/LandingPage'
+import { LoginPage } from '@/pages/LoginPage'
 import { PracticePage } from '@/pages/PracticePage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { SavedPage } from '@/pages/SavedPage'
 import { SettingsPage } from '@/pages/SettingsPage'
+import { SignUpPage } from '@/pages/SignUpPage'
 import { StatisticsPage } from '@/pages/StatisticsPage'
 import { TheoryCategoryPage } from '@/pages/TheoryCategoryPage'
 import { TheoryChapterPage } from '@/pages/TheoryChapterPage'
 import { TheoryPage } from '@/pages/TheoryPage'
-import { ProgressProvider } from '@/store/ProgressProvider'
+import { AuthProvider } from '@/store/AuthProvider'
 
 export function App() {
   return (
-    <ProgressProvider>
+    <AuthProvider>
       <BrowserRouter>
         <a
           href="#main"
@@ -31,25 +35,32 @@ export function App() {
 
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/logga-in" element={<LoginPage />} />
+          <Route path="/skapa-konto" element={<SignUpPage />} />
 
-          {/* The exam runner is intentionally outside the app shell so the
-              simulation mode fills the screen without navigation chrome. */}
-          <Route path="/app/prov/kor" element={<ExamRunnerPage />} />
+          {/* Everything below requires an account and gets that account's own
+              progress, courtesy of RequireAuth. */}
+          <Route element={<RequireAuth />}>
+            {/* The exam runner is intentionally outside the app shell so the
+                simulation mode fills the screen without navigation chrome. */}
+            <Route path="/app/prov/kor" element={<ExamRunnerPage />} />
 
-          <Route path="/app" element={<AppLayout />}>
-            <Route index element={<DashboardPage />} />
-            <Route path="teori" element={<TheoryPage />} />
-            <Route path="teori/:categoryId" element={<TheoryCategoryPage />} />
-            <Route path="teori/:categoryId/:chapterId" element={<TheoryChapterPage />} />
-            <Route path="fragor" element={<PracticePage />} />
-            <Route path="prov" element={<ExamSetupPage />} />
-            <Route path="prov/resultat/:attemptId" element={<ExamResultPage />} />
-            <Route path="statistik" element={<StatisticsPage />} />
-            <Route path="sparat" element={<SavedPage />} />
-            <Route path="framsteg" element={<AchievementsPage />} />
-            <Route path="profil" element={<ProfilePage />} />
-            <Route path="installningar" element={<SettingsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/app" element={<AppLayout />}>
+              <Route index element={<DashboardPage />} />
+              <Route path="teori" element={<TheoryPage />} />
+              <Route path="teori/:categoryId" element={<TheoryCategoryPage />} />
+              <Route path="teori/:categoryId/:chapterId" element={<TheoryChapterPage />} />
+              <Route path="fragor" element={<PracticePage />} />
+              <Route path="prov" element={<ExamSetupPage />} />
+              <Route path="prov/resultat/:attemptId" element={<ExamResultPage />} />
+              <Route path="statistik" element={<StatisticsPage />} />
+              <Route path="sparat" element={<SavedPage />} />
+              <Route path="framsteg" element={<AchievementsPage />} />
+              <Route path="ai-coach" element={<AiCoachPage />} />
+              <Route path="profil" element={<ProfilePage />} />
+              <Route path="installningar" element={<SettingsPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
           </Route>
 
           <Route
@@ -62,6 +73,6 @@ export function App() {
           />
         </Routes>
       </BrowserRouter>
-    </ProgressProvider>
+    </AuthProvider>
   )
 }

@@ -16,7 +16,7 @@ import { EmptyState } from '@/components/ui/EmptyState'
 import { Pill } from '@/components/ui/Pill'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { buttonStyles } from '@/components/ui/button-styles'
-import { getProfile } from '@/data/repository'
+import { useProfile } from '@/hooks/useProfile'
 import { useProgress } from '@/hooks/useProgress'
 import { formatNumber, pluralize } from '@/utils/format'
 import { nextUpChapter, recommendedQuestionCount } from '@/utils/learning'
@@ -25,7 +25,7 @@ import { formatRelativeDay } from '@/utils/date'
 
 export function DashboardPage() {
   const { progress } = useProgress()
-  const profile = getProfile()
+  const profile = useProfile()
   const stats = deriveStats(progress)
   const nextUp = nextUpChapter(progress)
   const goal = recommendedQuestionCount(progress)

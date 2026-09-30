@@ -2,9 +2,10 @@ import { Flame } from 'lucide-react'
 import { Link, NavLink } from 'react-router-dom'
 
 import { Logo } from '@/components/layout/Logo'
+import { Avatar } from '@/components/ui/Avatar'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { navItems } from '@/config/navigation'
-import { getProfile } from '@/data/repository'
+import { useProfile } from '@/hooks/useProfile'
 import { useProgress } from '@/hooks/useProgress'
 import { cn } from '@/utils/cn'
 import { pluralize } from '@/utils/format'
@@ -14,7 +15,7 @@ import { deriveStats } from '@/utils/stats'
 export function Sidebar() {
   const { progress } = useProgress()
   const stats = deriveStats(progress)
-  const profile = getProfile()
+  const profile = useProfile()
 
   return (
     <aside className="border-sand-200 bg-sand-100/70 hidden w-72 shrink-0 flex-col border-r px-4 py-6 lg:flex xl:w-76">
@@ -46,7 +47,17 @@ export function Sidebar() {
                         isActive ? 'text-moss-300' : 'text-ink-400 group-hover:text-forest-600',
                       )}
                     />
-                    {item.label}
+                    <span className="flex-1 truncate">{item.label}</span>
+                    {item.badge ? (
+                      <span
+                        className={cn(
+                          'shrink-0 rounded-full px-2 py-0.5 text-[0.625rem] font-semibold tracking-wide uppercase',
+                          isActive ? 'bg-forest-700 text-moss-200' : 'bg-sand-200 text-ink-500',
+                        )}
+                      >
+                        {item.badge}
+                      </span>
+                    ) : null}
                   </>
                 )}
               </NavLink>
@@ -72,11 +83,7 @@ export function Sidebar() {
           to="/app/profil"
           className="hover:shadow-soft flex items-center gap-3 rounded-xl bg-white p-3 transition-shadow"
         >
-          <img
-            src={profile.avatar}
-            alt=""
-            className="ring-moss-200 size-10 rounded-full object-cover ring-2"
-          />
+          <Avatar name={profile.name} src={profile.avatar} />
           <span className="min-w-0 flex-1">
             <span className="text-ink-900 block truncate text-sm font-semibold">
               {profile.name}

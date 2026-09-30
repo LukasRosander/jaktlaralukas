@@ -1,10 +1,11 @@
-import { Database, RotateCcw, Trash2, TriangleAlert } from 'lucide-react'
+import { Database, LogOut, RotateCcw, Trash2, TriangleAlert } from 'lucide-react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/Button'
 import { Card, CardHeader } from '@/components/ui/Card'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Switch } from '@/components/ui/Switch'
+import { useAuth } from '@/hooks/useAuth'
 import { useProgress } from '@/hooks/useProgress'
 import { cn } from '@/utils/cn'
 import type { UserSettings } from '@/types'
@@ -19,6 +20,7 @@ const dailyGoals = [5, 10, 20, 30]
 
 export function SettingsPage() {
   const { progress, updateSettings, resetProgress, restoreDemoData } = useProgress()
+  const { account, signOut } = useAuth()
   const settings = progress.settings
   const [confirmReset, setConfirmReset] = useState(false)
 
@@ -212,6 +214,26 @@ export function SettingsPage() {
               </Button>
             )}
           </div>
+        </Card>
+
+        {/* ── Account ──────────────────────────────────────────────────── */}
+        <Card padding="lg">
+          <CardHeader
+            title="Konto"
+            description={`Inloggad som ${account?.username ?? 'okänd'}.`}
+          />
+          <p className="text-ink-500 mb-3 text-sm">
+            Framstegen hör till det här kontot. Loggar du in med ett annat konto får du dess egna
+            kapitel, prov och märken.
+          </p>
+          <Button
+            variant="secondary"
+            fullWidth
+            onClick={signOut}
+            iconLeft={<LogOut className="size-4" />}
+          >
+            Logga ut
+          </Button>
         </Card>
       </div>
 

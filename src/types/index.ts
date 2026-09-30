@@ -187,6 +187,29 @@ export interface UserProfile
     examGoalDate?: string
   }> {}
 
+/**
+ * A local account in the prototype.
+ *
+ * This is deliberately *not* a security model: the record lives in the
+ * browser's localStorage, so anyone with access to the device can read it. The
+ * password is salted and hashed only so it is not lying around in plain text —
+ * real authentication belongs on a server. See the README.
+ */
+export interface Account {
+  id: string
+  /** Lowercase, unique, used to sign in. */
+  username: string
+  /** Name shown in the interface. */
+  displayName: string
+  passwordSalt: string
+  /** SHA-256 of `"<salt>:<password>"`, hex encoded. */
+  passwordHash: string
+  /** ISO date. */
+  createdAt: string
+  /** Target exam date, used for gentle nudges. */
+  examGoalDate?: string
+}
+
 export interface UserSettings {
   defaultQuestionCount: 25 | 50 | 70
   instantFeedback: boolean

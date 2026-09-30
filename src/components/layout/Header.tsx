@@ -2,9 +2,10 @@ import { Flame, Search } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { Logo } from '@/components/layout/Logo'
+import { Avatar } from '@/components/ui/Avatar'
 import { Pill } from '@/components/ui/Pill'
 import { navItems, profileNavItem } from '@/config/navigation'
-import { getProfile } from '@/data/repository'
+import { useProfile } from '@/hooks/useProfile'
 import { useProgress } from '@/hooks/useProgress'
 import { pluralize } from '@/utils/format'
 import { calculateStreak } from '@/utils/stats'
@@ -20,7 +21,7 @@ function currentTitle(pathname: string): string {
 export function Header() {
   const location = useLocation()
   const { progress } = useProgress()
-  const profile = getProfile()
+  const profile = useProfile()
   const streak = calculateStreak(progress.activeDays)
 
   return (
@@ -50,10 +51,10 @@ export function Header() {
             </Pill>
           ) : null}
           <Link to="/app/profil" aria-label="Min profil" className="shrink-0">
-            <img
+            <Avatar
+              name={profile.name}
               src={profile.avatar}
-              alt=""
-              className="ring-moss-200 hover:ring-moss-400 size-10 rounded-full object-cover ring-2 transition-all"
+              className="hover:ring-moss-400 transition-all"
             />
           </Link>
         </div>
