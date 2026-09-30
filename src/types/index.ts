@@ -1,5 +1,5 @@
 /**
- * Domain model for Jägarexamen.
+ * Domain model for Jaktlära.
  *
  * Every entity is a plain, serialisable object so the current mock data layer
  * (`src/data`) can later be swapped for a real REST/GraphQL API without

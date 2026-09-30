@@ -41,7 +41,7 @@ export function Logo({
             tone === 'dark' ? 'text-forest-900' : 'text-sand-50',
           )}
         >
-          Jägarexamen
+          Jaktlära
         </span>
         {withTagline ? (
           <span

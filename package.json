@@ -1,8 +1,8 @@
 {
-  "name": "jagarexamen",
+  "name": "jaktlara",
   "private": true,
   "version": "0.1.0",
-  "description": "Jägarexamen – din väg till jägarexamen. Öppen studieplattform för det svenska jägarexamensprovet.",
+  "description": "Jaktlära – din väg till jägarexamen. Öppen studieplattform för det svenska jägarexamensprovet.",
   "license": "MIT",
   "type": "module",
   "engines": {

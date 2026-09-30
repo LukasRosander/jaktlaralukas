@@ -1,4 +1,4 @@
-# Bidra till Jägarexamen
+# Bidra till Jaktlära
 
 Tack för att du vill hjälpa till! Projektet vinner mest på två sorters bidrag: **korrekt
 faktainnehåll** och **förbättringar av användarupplevelsen**.

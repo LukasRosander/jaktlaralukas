@@ -94,7 +94,7 @@ export function LandingPage() {
               </Pill>
 
               <h1 className="font-display mt-5 text-4xl leading-[1.05] text-sand-50 sm:text-5xl lg:text-6xl">
-                Jägarexamen
+                Jaktlära
               </h1>
               <p className="text-moss-300 mt-3 text-xl font-medium sm:text-2xl">
                 Din väg till jägarexamen

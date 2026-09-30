@@ -1,4 +1,4 @@
-# Jägarexamen
+# Jaktlära
 
 **Din väg till jägarexamen** – en modern, öppen studieplattform för alla som förbereder sig inför
 det svenska jägarexamensprovet.
@@ -76,7 +76,7 @@ npm -v
 
 ```bash
 git clone <repo-url>
-cd jagarexamen
+cd jaktlara        # mappen får samma namn som repot
 npm install
 npm run dev
 ```
@@ -103,14 +103,13 @@ npm run dev
 
    ```powershell
    git clone <repo-url>
-   cd jagarexamen
+   cd jaktlara        # mappen får samma namn som repot
    ```
 
-   Eller ladda ner projektet som ZIP från GitHub, högerklicka → **Extrahera alla**, och gå därefter
-   till mappen:
+   Eller ladda ner projektet som ZIP, högerklicka → **Extrahera alla**, och gå därefter till mappen:
 
    ```powershell
-   cd C:\Users\<ditt-användarnamn>\Downloads\jagarexamen
+   cd C:\Users\<ditt-användarnamn>\Downloads\jaktlara
    ```
 
 5. **Installera beroendena** (tar en stund första gången):
@@ -167,7 +166,7 @@ Resultatet hamnar i `dist/` och är statiska filer som kan läggas på valfri st
 ## Projektstruktur
 
 ```text
-jagarexamen/
+jaktlara/
 ├── public/                     Statiska filer (favicon)
 ├── src/
 │   ├── assets/images/          Bilder på vilt, natur och kategorier (webp)
@@ -216,7 +215,7 @@ jagarexamen/
   mockdatan direkt – de går via **`src/data/repository.ts`**.
 - **`src/store/ProgressProvider.tsx`** äger användarens framsteg: klarmarkerade kapitel, svar, prov,
   bokmärken, märken och inställningar. Allt sparas i `localStorage` under nyckeln
-  `jagarexamen.progress.v1`.
+  `jaktlara.progress.v1`.
 - **`src/utils/`** innehåller alla beräkningar – statistik, streak, märkesvillkor och provlogik – så
   att komponenterna kan hållas rena.
 - **`src/components/`** är presentationslagret, uppdelat i `ui/` (generiska byggstenar) och
@@ -337,4 +336,4 @@ faktainnehåll.
 
 ## Licens
 
-[MIT](LICENSE) © Jägarexamen-projektet
+[MIT](LICENSE) © Jaktlära-projektet

@@ -37,7 +37,7 @@ export function PlatformPreview({ className }: { className?: string }) {
           <span className="bg-amber-ochre/40 size-2 rounded-full" />
           <span className="bg-moss-400/50 size-2 rounded-full" />
           <span className="text-ink-400 ml-2 truncate text-[0.625rem]">
-            jagarexamen.app / dashboard
+            jaktlara.app / dashboard
           </span>
         </div>
 

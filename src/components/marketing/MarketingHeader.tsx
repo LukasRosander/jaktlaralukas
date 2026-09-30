@@ -14,7 +14,7 @@ export function MarketingHeader() {
   return (
     <header className="border-sand-200 bg-sand-50/80 sticky top-0 z-40 border-b backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:h-18 sm:px-6 lg:px-8">
-        <Link to="/" aria-label="Jägarexamen – startsida">
+        <Link to="/" aria-label="Jaktlära – startsida">
           <Logo />
         </Link>
 

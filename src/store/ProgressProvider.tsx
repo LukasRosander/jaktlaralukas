@@ -19,7 +19,7 @@ import type {
   UserSettings,
 } from '@/types'
 
-const STORAGE_KEY = 'jagarexamen.progress.v1'
+const STORAGE_KEY = 'jaktlara.progress.v1'
 
 const FONT_SCALES: Record<UserSettings['fontScale'], string> = {
   liten: '0.9375',

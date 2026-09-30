@@ -76,11 +76,11 @@ export function MarketingFooter() {
 
         <div className="border-forest-700 mt-10 border-t pt-6 text-xs leading-relaxed text-sand-300/70">
           <p>
-            Jägarexamen är ett fristående studieverktyg. Frågorna är egna exempelfrågor och är
+            Jaktlära är ett fristående studieverktyg. Frågorna är egna exempelfrågor och är
             varken hämtade från eller godkända som officiella provfrågor. Kontrollera alltid
             gällande regler hos Naturvårdsverket och länsstyrelsen inför jakt.
           </p>
-          <p className="mt-3">© {currentYear()} Jägarexamen · MIT-licens</p>
+          <p className="mt-3">© {currentYear()} Jaktlära · MIT-licens</p>
         </div>
       </div>
     </footer>
