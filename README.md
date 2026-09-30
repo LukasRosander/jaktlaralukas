@@ -17,10 +17,13 @@ under tidspress och följ din utveckling över tid.
 
 Det här är **första versionen** av plattformen: en komplett, interaktiv frontend-prototyp som körs
 lokalt. All data är mockdata som ligger i `src/data/` och sparas i webbläsarens `localStorage`.
-Ingen backend, ingen inloggning och ingen databas behövs för att köra projektet.
+Ingen backend och ingen databas behövs för att köra projektet.
 
-Appen startar tom – noll avklarade kapitel, noll svar och alla märken låsta – precis som för en ny
-användare. Vill du se hur skärmarna ser ut med historik finns **Fyll på med demodata** under
+Inloggningen är också en prototyp som lever helt i webbläsaren – se
+[Inloggningen i prototypen](#inloggningen-i-prototypen).
+
+Varje konto startar tomt – noll avklarade kapitel, noll svar och alla märken låsta – precis som för
+en ny användare. Vill du se hur skärmarna ser ut med historik finns **Fyll på med demodata** under
 Inställningar → Dina data.
 
 Arkitekturen är däremot förberedd för en riktig backend – se
@@ -30,7 +33,8 @@ Arkitekturen är däremot förberedd för en riktig backend – se
 
 | Område             | Vad du kan göra                                                                     |
 | ------------------ | ----------------------------------------------------------------------------------- |
-| **Landningssida**  | Presentation av plattformen med förhandsvisning av dashboarden                       |
+| **Landningssida**  | Presentation av plattformen, med vägar till inloggning och registrering               |
+| **Konto**          | Logga in, skapa konto och logga ut – varje konto har sina egna framsteg               |
 | **Dashboard**      | Se total framsteg, fortsätt på rätt kapitel, dagens träningsmål och senaste resultat |
 | **Teori**          | 12 ämnesområden, 20 kapitel med faktarutor, tabeller, bilder och "Viktigt att kunna" |
 | **Övningsfrågor**  | Träna med direkt facit och förklaring, filtrera på område eller bara ej klarade      |
@@ -40,6 +44,7 @@ Arkitekturen är däremot förberedd för en riktig backend – se
 | **Sparat**         | Bokmärk kapitel och frågor, med flikarna Alla / Teori / Frågor                       |
 | **Framsteg**       | 12 märken som låses upp automatiskt när du når ett delmål                            |
 | **Profil**         | Profilöversikt, nyckeltal och dina upplåsta märken                                   |
+| **AI-coach**       | Förberedd flik för en studiecoach – avstängd och tydligt märkt "Inte aktiv"           |
 | **Inställningar**  | Provstandard, textstorlek, reducerade animationer och nollställning av framsteg      |
 
 ---
@@ -167,6 +172,68 @@ Resultatet hamnar i `dist/` och är statiska filer som kan läggas på valfri st
 
 ---
 
+## Inloggningen i prototypen
+
+> **Detta är ingen säkerhetsmodell.** Konton sparas i webbläsarens `localStorage` på den dator du
+> sitter vid. Det finns ingen server, ingen sessionshantering och inget skydd mot att någon med
+> tillgång till datorn läser eller ändrar datan. Lösenord lagras hashade (SHA-256 med slumpat salt)
+> så att ingen klartext ligger kvar, men hashning i webbläsaren gör det **inte** säkert – vem som
+> helst kan byta ut hashen direkt i `localStorage`. Använd därför aldrig ett lösenord du använder
+> någon annanstans, och ersätt det här lagret med riktig serverautentisering innan något liknande
+> används på riktigt.
+
+### Testkonto
+
+| Användarnamn    | Lösenord |
+| --------------- | -------- |
+| `lukasrosander` | `12345`  |
+
+Kontot finns förifyllt så att appen går att prova direkt. På inloggningssidan finns knappen
+**Fyll i testkontot** som skriver in uppgifterna för dig.
+
+### Skapa konto
+
+`/skapa-konto` lägger till ett nytt konto lokalt. Användarnamnet måste vara unikt (jämförelsen är
+skiftlägesokänslig), och varje konto får sina egna framsteg: avklarade kapitel, svar, prov,
+bokmärken, märken och inställningar följer kontot och blandas aldrig ihop mellan konton.
+
+### Var datan ligger
+
+| Nyckel i `localStorage`               | Innehåll                                              |
+| ------------------------------------- | ----------------------------------------------------- |
+| `jaktlara.accounts.v1`                | Alla konton (namn, användarnamn, salt, lösenordshash) |
+| `jaktlara.session.v1`                 | Vilket konto som är inloggat just nu                  |
+| `jaktlara.progress.v2.<kontots-id>`   | Framstegen för ett enskilt konto                      |
+
+Töm de nycklarna i webbläsarens utvecklingsverktyg om du vill börja helt från början.
+
+### Koden
+
+- `src/store/AuthProvider.tsx` – kontolagret: inloggning, registrering och utloggning.
+- `src/utils/password.ts` – salt, hashning och valideringsreglerna för användarnamn och lösenord.
+- `src/data/accounts.ts` – testkontot och omvandlingen från konto till profil.
+- `src/components/auth/RequireAuth.tsx` – skyddar `/app/*` och monterar rätt konto framsteg.
+- `src/pages/LoginPage.tsx`, `src/pages/SignUpPage.tsx` – skärmarna.
+
+När en backend tillkommer är `AuthProvider` det enda stället som behöver bytas ut: resten av appen
+läser kontot via `useAuth()`.
+
+---
+
+## AI-coachen
+
+Fliken **AI-coach** finns i menyn men är medvetet avstängd. Sidan förklarar vad coachen ska kunna
+(svara på jaktfrågor med källor, ge råd om studieteknik, hålla sig till ämnet), varför den inte är
+påslagen ännu, och visar en inaktiverad chattruta med texten "Chatten är avstängd i den här
+versionen". Menypunkten är märkt **Snart**.
+
+Sidan ligger i `src/pages/AiCoachPage.tsx` och menyposten i `src/config/navigation.ts`. Det som
+återstår för att slå på den är en modellintegration bakom ett API samt en källgrundad kontext – ren
+frigenerering vore fel i ett sammanhang där svaren ska kunna beläggas mot Naturvårdsverket och
+gällande lagstiftning.
+
+---
+
 ## Projektstruktur
 
 ```text
@@ -176,16 +243,18 @@ jaktlara/
 │   ├── assets/images/          Bilder på vilt, natur och kategorier (webp)
 │   ├── components/
 │   │   ├── achievements/       BadgeCard, AchievementToast
+│   │   ├── auth/               AuthLayout, RequireAuth, TextField
 │   │   ├── exam/               ExamTimer, QuestionNavigator
 │   │   ├── layout/             Sidebar, MobileNavigation, Header, Logo
-│   │   ├── marketing/          Landningssidans header, footer och mockup
+│   │   ├── marketing/          Landningssidans header och footer
 │   │   ├── questions/          QuestionCard
 │   │   ├── stats/              StatCard, ProgressChart, CategoryBars
 │   │   ├── theory/             TheoryCard, TheoryBlocks
-│   │   └── ui/                 Button, Card, ProgressBar, Pill, Tabs, Switch …
+│   │   └── ui/                 Button, Card, ProgressBar, Pill, Tabs, Avatar …
 │   ├── config/                 navigation.ts – appens menystruktur
 │   ├── data/
 │   │   ├── chapters/           Teorikapitel, en fil per ämnesområde
+│   │   ├── accounts.ts         Testkontot och kontots profilvy
 │   │   ├── achievements.ts     Märken och deras villkor
 │   │   ├── images.ts           Registret över paketerade bilder
 │   │   ├── questions.ts        Frågebanken (exempelfrågor)
@@ -193,14 +262,14 @@ jaktlara/
 │   │   ├── sources.ts          Återanvändbara källhänvisningar
 │   │   ├── statistics.ts       Demohistorik (valfri, tomt läge som standard)
 │   │   ├── theory.ts           De 12 ämnesområdena
-│   │   └── user.ts             Mockprofil och standardinställningar
-│   ├── hooks/                  useProgress, useLocalStorage, useScrollToTop
+│   │   └── user.ts             Standardinställningar
+│   ├── hooks/                  useProgress, useAuth, useProfile, useLocalStorage …
 │   ├── layouts/                AppLayout – appens skal
-│   ├── pages/                  En fil per skärm
-│   ├── store/                  ProgressProvider och dess context
+│   ├── pages/                  En fil per skärm (inkl. LoginPage, SignUpPage, AiCoachPage)
+│   ├── store/                  AuthProvider, ProgressProvider och deras context
 │   ├── styles/index.css        Designtokens, typsnitt och animationer
 │   ├── types/index.ts          Hela domänmodellen
-│   ├── utils/                  stats, achievements, exam, date, format …
+│   ├── utils/                  stats, achievements, exam, password, date, format …
 │   ├── App.tsx                 Routing
 │   └── main.tsx                Startpunkt
 ├── CONTRIBUTING.md
@@ -217,9 +286,12 @@ jaktlara/
   `ExamAttempt`, `ProgressState` …). Börja här när du vill förstå datan.
 - **`src/data/`** innehåller allt innehåll som ren TypeScript-data. Inga komponenter importerar
   mockdatan direkt – de går via **`src/data/repository.ts`**.
+- **`src/store/AuthProvider.tsx`** äger kontona och vem som är inloggad.
+  **`src/components/auth/RequireAuth.tsx`** släpper bara in inloggade besökare på `/app/*` och
+  monterar framstegen för just det kontot.
 - **`src/store/ProgressProvider.tsx`** äger användarens framsteg: klarmarkerade kapitel, svar, prov,
   bokmärken, märken och inställningar. Allt sparas i `localStorage` under nyckeln
-  `jaktlara.progress.v2`.
+  `jaktlara.progress.v2.<kontots-id>`, så varje konto har sin egen historik.
 - **`src/utils/`** innehåller alla beräkningar – statistik, streak, märkesvillkor och provlogik – så
   att komponenterna kan hållas rena.
 - **`src/components/`** är presentationslagret, uppdelat i `ui/` (generiska byggstenar) och
@@ -316,7 +388,9 @@ Prototypen är byggd för att kunna få en backend utan att UI-lagret skrivs om:
 2. **Framsteg.** `src/store/ProgressProvider.tsx` är det enda stället som skriver användardata. Byt
    `useLocalStorage` mot ett API-anrop (`GET /api/progress` vid start, `PATCH` vid varje mutation).
    Alla komponenter använder `useProgress()` och behöver inte ändras.
-3. **Profil.** `src/data/user.ts` motsvarar svaret från `GET /api/me`.
+3. **Konto och profil.** `src/store/AuthProvider.tsx` är det enda stället som känner till konton.
+   Byt `signIn`/`signUp` mot `POST /api/login` och `POST /api/accounts`, och låt profilen komma från
+   `GET /api/me`. Ta bort lösenordshashningen i `src/utils/password.ts` – den hör hemma på servern.
 4. **Källor.** Modellen `ContentSource` finns redan på både frågor och kapitel, så innehåll kan
    flyttas till ett CMS utan att strukturen ändras.
 

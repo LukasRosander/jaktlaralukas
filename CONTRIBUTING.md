@@ -85,6 +85,10 @@ Se avsnittet "Lägga till innehåll" i [README.md](README.md#lägga-till-innehå
 - **Beräkningar hör i `src/utils/`**, inte i komponenter.
 - **Läs innehåll via `src/data/repository.ts`**, inte genom att importera mockdatan direkt.
 - **Framsteg ändras bara via `useProgress()`.** Skriv aldrig till `localStorage` från en komponent.
+- **Inloggningen är en prototyp, inte säkerhet.** Konton ligger i webbläsaren och lösenordshashningen
+  i `src/utils/password.ts` skyddar ingenting mot någon som har tillgång till datorn. Bygg inget som
+  förutsätter att lagret är säkert, och lägg inte in något känsligt bakom det – riktig
+  autentisering hör hemma på en server.
 - **Styling med Tailwind-klasser** och tokens från `src/styles/index.css`. Lägg inte till nya färger
   utan att först se om en befintlig token räcker.
 - **Kommentarer förklarar varför**, inte vad koden gör.
