@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom'
 
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { MarketingHeader } from '@/components/marketing/MarketingHeader'
-import { PlatformPreview } from '@/components/marketing/PlatformPreview'
 import { Card } from '@/components/ui/Card'
 import { Pill } from '@/components/ui/Pill'
 import { buttonStyles } from '@/components/ui/button-styles'
@@ -87,8 +86,8 @@ export function LandingPage() {
           />
           <div className="from-forest-950/95 via-forest-900/85 to-forest-800/70 absolute inset-0 bg-gradient-to-br" />
 
-          <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-14 lg:px-8 lg:py-28">
-            <div className="animate-rise">
+          <div className="relative mx-auto w-full max-w-3xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
+            <div className="animate-rise flex flex-col items-center text-center">
               <Pill tone="sand" icon={<CircleCheck className="size-3.5" />}>
                 Öppen studieplattform · gratis att använda
               </Pill>
@@ -105,7 +104,7 @@ export function LandingPage() {
                 dina framsteg.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:justify-center">
                 <Link to="/app" className={buttonStyles('moss', 'lg')}>
                   Börja plugga
                   <ArrowRight className="size-4.5" />
@@ -123,7 +122,7 @@ export function LandingPage() {
                 </a>
               </div>
 
-              <dl className="border-forest-700/60 mt-10 grid max-w-md grid-cols-3 gap-4 border-t pt-6">
+              <dl className="border-forest-700/60 mt-10 grid w-full max-w-md grid-cols-3 gap-4 border-t pt-6">
                 {stats.map((stat) => (
                   <div key={stat.label}>
                     <dt className="sr-only">{stat.label}</dt>
@@ -137,8 +136,6 @@ export function LandingPage() {
                 ))}
               </dl>
             </div>
-
-            <PlatformPreview className="animate-rise lg:translate-y-2" />
           </div>
         </section>
 
