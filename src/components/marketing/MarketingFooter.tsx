@@ -46,9 +46,14 @@ export function MarketingFooter() {
             <h2 className="text-sand-50 mb-3 text-sm font-semibold">Om projektet</h2>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#oppen-kallkod" className="hover:text-moss-300 transition-colors">
+                <Link to="/oppen-kallkod" className="hover:text-moss-300 transition-colors">
                   Öppen källkod
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/oppen-kallkod#bidra" className="hover:text-moss-300 transition-colors">
+                  Hjälp till
+                </Link>
               </li>
               <li>
                 <a
@@ -76,9 +81,9 @@ export function MarketingFooter() {
 
         <div className="border-forest-700 mt-10 border-t pt-6 text-xs leading-relaxed text-sand-300/70">
           <p>
-            Jaktlära är ett fristående studieverktyg. Frågorna är egna exempelfrågor och är
-            varken hämtade från eller godkända som officiella provfrågor. Kontrollera alltid
-            gällande regler hos Naturvårdsverket och länsstyrelsen inför jakt.
+            Jaktlära är ett fristående studieverktyg. Frågorna är egna exempelfrågor och är varken
+            hämtade från eller godkända som officiella provfrågor. Kontrollera alltid gällande
+            regler hos Naturvårdsverket och länsstyrelsen inför jakt.
           </p>
           <p className="mt-3">© {currentYear()} Jaktlära · MIT-licens</p>
         </div>

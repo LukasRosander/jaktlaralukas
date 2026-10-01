@@ -4,6 +4,7 @@ import {
   ChartColumnBig,
   CircleCheck,
   Code,
+  HeartHandshake,
   Info,
   ListChecks,
   PlayCircle,
@@ -22,6 +23,7 @@ import { buttonStyles } from '@/components/ui/button-styles'
 import { images } from '@/data/images'
 import { questions } from '@/data/questions'
 import { theoryCategories, totalChapterCount } from '@/data/theory'
+import { useScrollToHash } from '@/hooks/useScrollToHash'
 
 const steps = [
   {
@@ -65,6 +67,8 @@ const features = [
 ]
 
 export function LandingPage() {
+  useScrollToHash()
+
   const stats = [
     { value: `${questions.length}`, label: 'exempelfrågor' },
     { value: `${totalChapterCount}`, label: 'teorikapitel' },
@@ -271,15 +275,15 @@ export function LandingPage() {
                       <ArrowRight className="size-4.5" />
                     </Link>
                     <Link
-                      to="/app/prov"
+                      to="/oppen-kallkod"
                       className={buttonStyles(
                         'secondary',
                         'lg',
                         'border-white/25 bg-white/10 text-sand-50 hover:border-white/40 hover:bg-white/15',
                       )}
                     >
-                      <Target className="size-4.5" />
-                      Testa provsimulatorn
+                      <HeartHandshake className="size-4.5" />
+                      Så hjälper du till
                     </Link>
                   </div>
                 </div>
@@ -291,9 +295,9 @@ export function LandingPage() {
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-sand-200/85">
                     Alla frågor i plattformen är egna exempelfrågor skrivna för utbildningssyfte. De
-                    är inte hämtade från det officiella provet och ska inte uppfattas som
-                    officiella provfrågor. Kontrollera alltid gällande regler hos Naturvårdsverket
-                    och din länsstyrelse inför jakt.
+                    är inte hämtade från det officiella provet och ska inte uppfattas som officiella
+                    provfrågor. Kontrollera alltid gällande regler hos Naturvårdsverket och din
+                    länsstyrelse inför jakt.
                   </p>
                 </div>
               </div>

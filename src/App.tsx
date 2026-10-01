@@ -11,6 +11,7 @@ import { ExamRunnerPage } from '@/pages/ExamRunnerPage'
 import { ExamSetupPage } from '@/pages/ExamSetupPage'
 import { LandingPage } from '@/pages/LandingPage'
 import { LoginPage } from '@/pages/LoginPage'
+import { OpenSourcePage } from '@/pages/OpenSourcePage'
 import { PracticePage } from '@/pages/PracticePage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { SavedPage } from '@/pages/SavedPage'
@@ -37,6 +38,7 @@ export function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/logga-in" element={<LoginPage />} />
           <Route path="/skapa-konto" element={<SignUpPage />} />
+          <Route path="/oppen-kallkod" element={<OpenSourcePage />} />
 
           {/* Everything below requires an account and gets that account's own
               progress, courtesy of RequireAuth. */}

@@ -1,18 +1,20 @@
 import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { Logo } from '@/components/layout/Logo'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { useAuth } from '@/hooks/useAuth'
 
+// Absolute so they also work from other public pages; LandingPage scrolls to the hash.
 const links = [
-  { href: '#sa-fungerar-det', label: 'Så fungerar det' },
-  { href: '#innehall', label: 'Innehåll' },
-  { href: '#oppen-kallkod', label: 'Öppen källkod' },
+  { to: '/#sa-fungerar-det', label: 'Så fungerar det' },
+  { to: '/#innehall', label: 'Innehåll' },
+  { to: '/oppen-kallkod', label: 'Öppen källkod' },
 ]
 
 export function MarketingHeader() {
   const { account } = useAuth()
+  const { pathname } = useLocation()
 
   return (
     <header className="border-sand-200 bg-sand-50/80 sticky top-0 z-40 border-b backdrop-blur-md">
@@ -23,13 +25,14 @@ export function MarketingHeader() {
 
         <nav aria-label="Sidnavigering" className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-ink-600 hover:text-forest-800 rounded-full px-3.5 py-2 text-sm font-medium transition-colors hover:bg-white"
+            <Link
+              key={link.to}
+              to={link.to}
+              aria-current={pathname === link.to ? 'page' : undefined}
+              className="text-ink-600 hover:text-forest-800 aria-[current=page]:text-forest-800 rounded-full px-3.5 py-2 text-sm font-medium transition-colors hover:bg-white aria-[current=page]:bg-white"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 

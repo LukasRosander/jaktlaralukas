@@ -34,6 +34,7 @@ Arkitekturen är däremot förberedd för en riktig backend – se
 | Område             | Vad du kan göra                                                                     |
 | ------------------ | ----------------------------------------------------------------------------------- |
 | **Landningssida**  | Presentation av plattformen, med vägar till inloggning och registrering               |
+| **Öppen källkod**  | Förklarar öppen källkod, tackar för bidrag och visar steg för steg hur man hjälper till |
 | **Konto**          | Logga in, skapa konto och logga ut – varje konto har sina egna framsteg               |
 | **Dashboard**      | Se total framsteg, fortsätt på rätt kapitel, dagens träningsmål och senaste resultat |
 | **Teori**          | 12 ämnesområden, 20 kapitel med faktarutor, tabeller, bilder och "Viktigt att kunna" |
@@ -246,12 +247,12 @@ jaktlara/
 │   │   ├── auth/               AuthLayout, RequireAuth, TextField
 │   │   ├── exam/               ExamTimer, QuestionNavigator
 │   │   ├── layout/             Sidebar, MobileNavigation, Header, Logo
-│   │   ├── marketing/          Landningssidans header och footer
+│   │   ├── marketing/          Publika sidors header, footer och RepoLink
 │   │   ├── questions/          QuestionCard
 │   │   ├── stats/              StatCard, ProgressChart, CategoryBars
 │   │   ├── theory/             TheoryCard, TheoryBlocks
 │   │   └── ui/                 Button, Card, ProgressBar, Pill, Tabs, Avatar …
-│   ├── config/                 navigation.ts – appens menystruktur
+│   ├── config/                 navigation.ts (menyn), site.ts (länken till GitHub)
 │   ├── data/
 │   │   ├── chapters/           Teorikapitel, en fil per ämnesområde
 │   │   ├── accounts.ts         Testkontot och kontots profilvy
@@ -376,6 +377,23 @@ De definieras av `TheoryBlock` i `src/types/index.ts` och renderas av
 Lägg till en post i `src/data/achievements.ts`. Villkoret (`criteria`) måste matcha en variant av
 `AchievementCriteria` i `src/types/index.ts`, och utvärderas i `src/utils/achievements.ts`. Behöver
 du en helt ny typ av villkor lägger du till den på båda ställena.
+
+---
+
+## Lägga in länken till GitHub
+
+Sidan `/oppen-kallkod` (`src/pages/OpenSourcePage.tsx`) har knappar till projektet, till nya
+issues och till bidragsguiden. Så länge ingen länk är satt visas de som inaktiva knappar märkta
+**Snart**, så att ingen skickas till en död sida.
+
+När repot är publikt räcker det att fylla i en rad i `src/config/site.ts`:
+
+```ts
+export const repoUrl: string | null = 'https://github.com/<användare>/jaktlara'
+```
+
+Alla GitHub-knappar på sajten byggs från den adressen, och texten om att länken kommer senare
+försvinner automatiskt.
 
 ---
 
