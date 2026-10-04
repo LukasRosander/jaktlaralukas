@@ -6,7 +6,7 @@
  * derived from it, and while it is null those links render as "kommer snart"
  * instead of pointing nowhere.
  */
-export const repoUrl: string | null = null
+export const repoUrl: string | null = 'https://github.com/LukasRosander/jaktlaralukas'
 
 /** A path inside the repository, such as 'issues/new' or 'blob/main/CONTRIBUTING.md'. */
 export function repoLink(path = ''): string | null {

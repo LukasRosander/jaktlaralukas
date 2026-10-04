@@ -85,8 +85,8 @@ npm -v
 ### Installera och starta (macOS / Linux)
 
 ```bash
-git clone <repo-url>
-cd jaktlara        # mappen får samma namn som repot
+git clone https://github.com/LukasRosander/jaktlaralukas.git
+cd jaktlaralukas
 npm install
 npm run dev
 ```
@@ -112,14 +112,14 @@ npm run dev
 4. **Hämta projektet.** Antingen med Git:
 
    ```powershell
-   git clone <repo-url>
-   cd jaktlara        # mappen får samma namn som repot
+   git clone https://github.com/LukasRosander/jaktlaralukas.git
+   cd jaktlaralukas
    ```
 
    Eller ladda ner projektet som ZIP, högerklicka → **Extrahera alla**, och gå därefter till mappen:
 
    ```powershell
-   cd C:\Users\<ditt-användarnamn>\Downloads\jaktlara
+   cd C:\Users\<ditt-användarnamn>\Downloads\jaktlaralukas-main
    ```
 
 5. **Installera beroendena** (tar en stund första gången):
